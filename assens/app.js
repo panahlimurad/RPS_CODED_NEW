@@ -24,7 +24,7 @@ var imageTextSecond = document.querySelector("#imageTextSecond");
 var exampleModal = document.querySelector("#exampleModal");
 
 
-// points 
+//User & Comp points points 
 var yourPoint = 0
 var computerPoint = 0
 
@@ -72,12 +72,29 @@ function computer(arr) {
     return arr[randomAttack]
 }
 
+// User win function
+function userWin() { 
+        yourPoint++
+        firstResult.innerHTML = `Score : ${yourPoint}`;
+        plyFirst.innerHTML = "WIN";
+        plySecond.innerHTML = "LOSE";
+}
+
+// Comp win function
+function compWin() {
+        computerPoint++;
+        secondResult.innerHTML = `Score : ${computerPoint}`;
+        plySecond.innerHTML = "WIN";
+        plyFirst.innerHTML = "LOSE";
+}
+
 // function main
 function game(e) {
 
     if (startPage.classList.contains("d-block")) {
         return
     }
+
     var userAttack = e.key;
     var randomCompAttack = computer(compAttack);
 
@@ -89,47 +106,43 @@ function game(e) {
       alert("Please choose correct letter");
       return;
     } 
-
-    console.log(userAttack);
-    console.log(randomCompAttack);
+    // -------- User win
 
     if (userAttack === "r" && randomCompAttack === "s") {
+      userWin();
+      imageTextFirst.innerHTML = "Rock";
+      imageTextSecond.innerHTML = "Scissors";
         
-        yourPoint++
-        firstResult.innerHTML = `Score : ${yourPoint}`
-        plyFirst.innerHTML = 'WIN'
-        plySecond.innerHTML = 'LOSE'
-        imageTextFirst.innerHTML = "Rock"
-        imageTextSecond.innerHTML = "Scissors";
-
     } else if (userAttack === "s" && randomCompAttack === "p") {
-
-        yourPoint++
-        imageTextFirst.innerHTML = "Scissors";
-        imageTextSecond.innerHTML = "Paper";
-        firstResult.innerHTML = `Score : ${yourPoint}`;
-        plyFirst.innerHTML = 'WIN';
-        plySecond.innerHTML = "LOSE";
+      userWin();
+      imageTextFirst.innerHTML = "Scissors";
+      imageTextSecond.innerHTML = "Paper";
         
     } else if (userAttack === "p" && randomCompAttack === "r") {
-        yourPoint++
-        imageTextFirst.innerHTML = "Paper";
-        imageTextSecond.innerHTML = "Rock";
-        firstResult.innerHTML = `Score : ${yourPoint}`;
-        plyFirst.innerHTML = "WIN";
-        plySecond.innerHTML = "LOSE";
+      userWin();
+      imageTextFirst.innerHTML = "Paper";
+      imageTextSecond.innerHTML = "Rock";
+        // ------ Comp win
+
+    } else if (userAttack === "r" && randomCompAttack === "p") {
+      compWin();
+      imageTextFirst.innerHTML = "Rock";
+      imageTextSecond.innerHTML = "Paper";
+        
+    } else if (userAttack === "p" && randomCompAttack === "s") {
+      compWin();
+      imageTextFirst.innerHTML = "Paper";
+      imageTextSecond.innerHTML = "Scissorss";
+        
+    } else if (userAttack === "s" && randomCompAttack === "r") {
+      compWin();
+      imageTextFirst.innerHTML = "Scissors";
+      imageTextSecond.innerHTML = "Rock";
+        //-------- Draw
         
     } else if (userAttack === randomCompAttack) {
-
-        plyFirst.innerHTML = "DRAW"
-        plySecond.innerHTML = "DRAW";
-
-    } else {
-        computerPoint++
-        plySecond.innerHTML = 'WIN'
-        plyFirst.innerHTML = "LOSE";
-        secondResult.innerHTML = `Score : ${computerPoint}`;
-
+      plyFirst.innerHTML = "DRAW";
+      plySecond.innerHTML = "DRAW";
     }
     
 }
